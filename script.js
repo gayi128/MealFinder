@@ -105,12 +105,14 @@ document.getElementById("category-select").addEventListener("change", function (
 
   if (selectedCategory === "") return;
 
-  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`)
+  fetch( 'www.themealdb.com/api/json/v1/1/filter.php?c=${Category}')
     .then(res => res.json())
     .then(data => {
       displayMeals(data.meals);
     });
 });
+document.addEventListener("DOMContentLoaded", loadCategories);
+
 
 }
 
