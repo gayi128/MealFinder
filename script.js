@@ -16,7 +16,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
     });
 });
 
-function displayMeals(meals) {
+function displayMeals(meals){
   const container = document.getElementById('meals-container');
   container.innerHTML = "";
 
@@ -53,5 +53,34 @@ function displayMeals(meals) {
     });
 }
 
+function showMealPopup(meal) {
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`];
+    const measure = meal[`strMeasure${i}`];
+    if (ingredient && ingredient.trim()) {
+      ingredients.push(`${ingredient} - ${measure}`);
+    }
+  }
 
+  const mealDetailsWindow = window.open("", "_blank", "width=600,height=700,scrollbars=yes");
+  mealDetailsWindow.document.write(`
+    <html>
+    <head>
+      <title>${meal.strMeal}</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="p-3">
+      <h2>${meal.strMeal}</h2>
+      <img src="${meal.strMealThumb}" class="img-fluid mb-3" alt="${meal.strMeal}">
+      <h5>Ingredients:</h5>
+      <ul>${ingredients.map(item => `<li>${item}</li>`).join('')}</ul>
+      <h5 class="mt-3">Instructions:</h5>
+      <p>${meal.strInstructions}</p>
+    </body>
+    </html>
+  `)
 }
+}
+
+
