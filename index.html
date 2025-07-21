@@ -1,61 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meal Finder</title>
-  <script src="./script.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    body { background-color: #f9f9f9; }
-    .card img { max-height: 200px; object-fit: cover; }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container py-5 text-center">
-    <h1 class="mb-4">🍽️ Meal Finder App</h1>
 
-    <!-- Hamburger Button -->
-<button class="btn btn-outline-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoryMenu" aria-controls="categoryMenu">
-  ☰ Categories
-</button>
+  <div class="container my-5">
+    <h1 class="text-center mb-4">🍽️ Meal Finder</h1>
 
-<!-- Offcanvas Sidebar -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="categoryMenu" aria-labelledby="categoryMenuLabel">
-  <div class="offcanvas-header">
-    <h5 id="categoryMenuLabel">Meal Categories</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body" id="category-list">
-    <!-- Category buttons will be loaded here -->
-  </div>
-</div>
-
-    <div class="row mb-4 justify-content-center">
-      <div class="col-md-4">
-        <input type="text" id="search-input" class="form-control" placeholder="Search meal by name...">
-      </div>
-      <div class="col-md-2">
-        <button id="search-btn" class="btn btn-primary w-100">Search</button>
-      </div>
+    <!-- Category Dropdown -->
+    <div class="mb-4 w-50 mx-auto">
+      <select id="category-select" class="form-select">
+        <option value="">-- Filter by Category --</option>
+      </select>
     </div>
 
+    <!-- Search Bar -->
+    <div class="input-group mb-5 w-75 mx-auto">
+      <input type="text" id="search-input" class="form-control" placeholder="Search for a meal...">
+      <button id="search-btn" class="btn btn-primary">Search</button>
+    </div>
 
-    <div id="meals-container" class="row g-4"></div>
+    <!-- Meals Grid -->
+    <div id="meals-container" class="row g-4 justify-content-center">
+      <!-- Meals will appear here -->
+    </div>
   </div>
 
-  <!-- Meal Details Modal -->
+  <!-- Meal Detail Modal -->
   <div class="modal fade" id="mealModal" tabindex="-1" aria-labelledby="mealModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="mealModalLabel">Meal Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" id="mealModalBody"></div>
+        <div class="modal-body" id="mealModalBody">
+          <!-- Content filled by JS -->
+        </div>
       </div>
     </div>
   </div>
-  </body>
-  </html>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
