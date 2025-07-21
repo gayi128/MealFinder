@@ -16,6 +16,22 @@
   <div class="container py-5 text-center">
     <h1 class="mb-4">🍽️ Meal Finder App</h1>
 
+    <!-- Hamburger Button -->
+<button class="btn btn-outline-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoryMenu" aria-controls="categoryMenu">
+  ☰ Categories
+</button>
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="categoryMenu" aria-labelledby="categoryMenuLabel">
+  <div class="offcanvas-header">
+    <h5 id="categoryMenuLabel">Meal Categories</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" id="category-list">
+    <!-- Category buttons will be loaded here -->
+  </div>
+</div>
+
     <div class="row mb-4 justify-content-center">
       <div class="col-md-4">
         <input type="text" id="search-input" class="form-control" placeholder="Search meal by name...">
@@ -25,13 +41,6 @@
       </div>
     </div>
 
-    <div class="row mb-4 justify-content-center">
-      <div class="col-md-6">
-        <select id="category-select" class="form-select">
-          <option value="">-- Filter by Category --</option>
-        </select>
-      </div>
-    </div>
 
     <div id="meals-container" class="row g-4"></div>
   </div>

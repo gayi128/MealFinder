@@ -23,19 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function loadCategories() {
-      fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
-        .then(res => res.json())
-        .then(data => {
-          const select = document.getElementById("category-select");
-          data.categories.forEach(cat => {
-            const opt = document.createElement("option");
-            opt.value = cat.strCategory;
-            opt.textContent = cat.strCategory;
-            select.appendChild(opt);
-          });
-        })
-        .catch(err => console.error("Load Categories Error:", err));
-    }
+  fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("category-list");
+      container.innerHTML = "";
+
+      data.categories.forEach(category => {
+        const button = document.createElement("button");
+        button.className = "btn btn-outline-secondary w-100 text-start mb-2";
+        button.textContent = category.strCategory;
+        button.onclick = () => fetchCategoryMeals(category.strCategory);
+        container.appendChild(button);
+      });
+    })
+    .catch(err => {
+      console.error("Error loading categories:", err);
+    });
+}
+
 
     function displayMeals(meals) {
       const container = document.getElementById("meals-container");
