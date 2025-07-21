@@ -35,6 +35,7 @@ function displayMeals(meals){
         <div class="card-body">
           <h5 class="card-title">${meal.strMeal}</h5>
           <p class="card-text">${meal.strArea} - ${meal.strCategory}</p>
+          <button class="btn btn-sm btn-outline-info mt-2" onclick="getMealDetails(${meal.idMeal})">View Recipe</button>
         </div>
       </div>
     `;
@@ -81,6 +82,7 @@ function showMealPopup(meal) {
     </html>
   `)
 }
+window.getMealDetails = getMealDetails;
 }
 
 
