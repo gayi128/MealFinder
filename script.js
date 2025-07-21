@@ -64,6 +64,23 @@ function showMealPopup(meal) {
     }
   }
 
+  document.addEventListener("DOMContentLoaded", loadCategories);
+
+function loadCategories() {
+  fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("category-select");
+      data.categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category.strCategory;
+        option.textContent = category.strCategory;
+        select.appendChild(option);
+      });
+    });
+}
+
+
   const mealDetailsWindow = window.open("", "_blank", "width=600,height=700,scrollbars=yes");
   mealDetailsWindow.document.write(`
     <html>
@@ -83,6 +100,18 @@ function showMealPopup(meal) {
   `)
 }
 window.getMealDetails = getMealDetails;
+document.getElementById("category-select").addEventListener("change", function () {
+  const selectedCategory = this.value;
+
+  if (selectedCategory === "") return;
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`)
+    .then(res => res.json())
+    .then(data => {
+      displayMeals(data.meals);
+    });
+});
+
 }
 
 
