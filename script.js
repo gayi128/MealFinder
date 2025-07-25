@@ -125,3 +125,7 @@ function showMealInModal(meal) {
 
   new bootstrap.Modal(document.getElementById("mealModal")).show();
 }
+
+
+
+ 

@@ -26,3 +26,11 @@ body {
    height:400px;
   align-content: center;
 }
+#search-btn{
+  border-radius: 50%;
+  background-color: darkorange;
+}
+#search-input{
+  border-radius: 40px;
+   
+}
