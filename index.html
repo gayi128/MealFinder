@@ -5,56 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meal Finder</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
-  
-  <header>
-    <div class='header'> 
-     <h1 class="text-center mb-4 d-flex justify-content-start"> Meal Finder</h1>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">MealFinder</a>
+      <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoryOffcanvas">
+        &#9776; Categories
+      </button>
     </div>
-  </header>
-    <!-- Search Bar -->
-     <div class="top"> 
-    <div class="input-group mb-5 w-50 mx-auto ">
-      <input type="text" id="search-input" class="form-control " placeholder="Search for a meal...">
-      <button id="search-btn" class="btn btn-primary "><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <div class=" d-flex justify-content-center"><h2>Whats your Favorite Meal?</h2></div>
-    <div class=" d-flex justify-content-center "><h4>Personalize your experience</h4></div>
-     </div>
+  </nav>
 
-    <!-- Meals Grid -->
-    <div id="meals-container" class="row g-4 justify-content-center">
-      <!-- Meals will appear here -->
+  <!-- Search -->
+  <div class="container mt-4">
+    <div class="mb-4 w-75 mx-auto">
+      <input type="text" id="search-input" class="form-control" placeholder="Search meal by name...">
     </div>
-    <!-- Categories Grid -->
-<div class="container my-4 p-5">
-  <h2 class="text-center mb-4 d-flex justify-content-start"> Categories</h2>
-  <div id="categories-container" class="row g-4 justify-content-center ">
-    <!-- Category cards will be injected here -->
-  </div>
-</div>
 
+    <!-- Category Cards -->
+    <div class="row" id="all-categories"></div>
+
+    <!-- Category Description -->
+    <div id="category-description" class="text-center mb-4"></div>
+
+    <!-- Meals Display -->
+    <div id="meals" class="row g-4 justify-content-center"></div>
   </div>
 
-  <!-- Meal Detail Modal -->
-  <div class="modal fade" id="mealModal" tabindex="-1" aria-labelledby="mealModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+  <!-- Meal Modal -->
+  <div class="modal fade" id="mealModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="mealModalLabel">Meal Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" id="mealModalBody">
-          <!-- Content filled by JS -->
-        </div>
+        <div class="modal-body" id="modalBody"></div>
       </div>
     </div>
   </div>
+
+  <!-- Offcanvas for Categories -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="categoryOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Meal Categories</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul id="category-list" class="list-group"></ul>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

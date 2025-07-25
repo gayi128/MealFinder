@@ -1,39 +1,9 @@
 body {
-  background-color: #f9f9f9;
-}
-
-.card img {
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-title {
-  font-size: 1.2rem;
-}
-
-#categories-container .card img {
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 2px solid #eee;
-}
-
-.header{
-  background-color: darkorange;
-  display: flex;
-
-}
-.top{
-  color: white;
-   background-image: url('./assets/resto.png');
-   height:400px;
-  align-content: center;
-  padding-bottom: 10px;
-}
-#search-btn{
-  border-radius: 50%;
-  background-color: darkorange;
-}
-#search-input{
-  border-radius: 40px;
-   
-}
+      background-color: #f9f9f9;
+    }
+    .meal-card {
+      transition: transform 0.2s ease;
+    }
+    .meal-card:hover {
+      transform: scale(1.03);
+    }

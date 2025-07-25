@@ -1,131 +1,124 @@
-// Load categories on page load
-document.addEventListener("DOMContentLoaded", () => {
-  loadCategories();
-});
+const searchInput = document.getElementById("search-input");
+const mealsContainer = document.getElementById("meals");
+const categoryList = document.getElementById("category-list");
+const categoryDescription = document.getElementById("category-description");
+const allCategoriesContainer = document.getElementById("all-categories");
 
-document.getElementById("search-btn").addEventListener("click", () => {
-  const query = document.getElementById("search-input").value.trim();
-  if (!query) return alert("Enter a meal name");
-  fetchMealsByName(query);
-});
-
-document.getElementById("category-select").addEventListener("change", (e) => {
-  const category = e.target.value;
-  if (category) fetchMealsByCategory(category);
-});
-
-function loadCategories() {
-  fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
-    .then(res => res.json())
-    .then(data => {
-      // Show category cards
-      displayCategories(data.categories);
-
-      // Fill dropdown (optional)
-      const select = document.getElementById("category-select");
-      data.categories.forEach(cat => {
-        const opt = document.createElement("option");
-        opt.value = cat.strCategory;
-        opt.textContent = cat.strCategory;
-        select.appendChild(opt);
-      });
-    });
-  }
-
-
-function fetchMealsByName(query) {
-  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
-    .then(res => res.json())
-    .then(data => displayMeals(data.meals));
+async function fetchCategories() {
+  const res = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php");
+  const data = await res.json();
+  categoryList.innerHTML = "";
+  data.categories.forEach(cat => {
+    const li = document.createElement("li");
+    li.className = "list-group-item list-group-item-action";
+    li.textContent = cat.strCategory;
+    li.style.cursor = "pointer";
+    li.onclick = () => fetchByCategory(cat.strCategory);
+    categoryList.appendChild(li);
+  });
+  displayAllCategoryCards(data.categories);
 }
 
-function fetchMealsByCategory(category) {
-  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
-    .then(res => res.json())
-    .then(data => displayMeals(data.meals));
+async function searchMeals(query) {
+  categoryDescription.innerHTML = "";
+  allCategoriesContainer.style.display = "none";
+  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+  const data = await res.json();
+  displayMeals(data.meals);
+}
+
+async function fetchByCategory(category) {
+  allCategoriesContainer.style.display = "none";
+  const allCategories = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php");
+  const categoryData = await allCategories.json();
+  const selectedCat = categoryData.categories.find(cat => cat.strCategory === category);
+  if (selectedCat) {
+    categoryDescription.innerHTML = `
+      <img src="${selectedCat.strCategoryThumb}" class="img-fluid mb-3 rounded" style="max-height: 200px;" alt="${category}">
+      <h3>${selectedCat.strCategory}</h3>
+      <p class="px-3">${selectedCat.strCategoryDescription}</p>
+    `;
+  }
+
+  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+  const data = await res.json();
+  displayMeals(data.meals);
+}
+
+async function fetchMealDetails(id) {
+  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const data = await res.json();
+  showMealDetails(data.meals[0]);
 }
 
 function displayMeals(meals) {
-  const container = document.getElementById("meals-container");
-  container.innerHTML = "";
-
+  mealsContainer.innerHTML = "";
   if (!meals) {
-    container.innerHTML = "<p class='text-danger text-center'>No meals found.</p>";
+    mealsContainer.innerHTML = '<p class="text-center">No meals found.</p>';
     return;
   }
-
   meals.forEach(meal => {
     const col = document.createElement("div");
     col.className = "col-md-4";
-
     col.innerHTML = `
-      <div class="card h-100">
+      <div class="card meal-card h-100">
         <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
         <div class="card-body">
           <h5 class="card-title">${meal.strMeal}</h5>
-          <button class="btn btn-sm btn-outline-info mt-2" onclick="getMealDetails('${meal.idMeal}')">View Recipe</button>
+          <button class="btn btn-primary" onclick="fetchMealDetails(${meal.idMeal})">View Recipe</button>
         </div>
       </div>
     `;
-
-    container.appendChild(col);
+    mealsContainer.appendChild(col);
   });
 }
-// display ategories
-function displayCategories(categories) {
-  const container = document.getElementById("categories-container");
-  container.innerHTML = "";
 
+function showMealDetails(meal) {
+  document.getElementById("mealModalLabel").textContent = meal.strMeal;
+  document.getElementById("modalBody").innerHTML = `
+    <img src="${meal.strMealThumb}" class="img-fluid mb-3" alt="${meal.strMeal}">
+    <p><strong>Category:</strong> ${meal.strCategory}</p>
+    <p><strong>Area:</strong> ${meal.strArea}</p>
+    <p><strong>Instructions:</strong> ${meal.strInstructions}</p>
+    <a href="${meal.strYoutube}" target="_blank" class="btn btn-danger mt-2">Watch Video</a>
+  `;
+  const modal = new bootstrap.Modal(document.getElementById("mealModal"));
+  modal.show();
+}
+
+function displayAllCategoryCards(categories) {
+  allCategoriesContainer.innerHTML = "";
   categories.forEach(cat => {
-    const card = document.createElement("div");
-    card.className = "col-md-3";
-
-    card.innerHTML = `
-      <div class="card h-100 text-center shadow-sm" style="cursor: pointer;" onclick="fetchMealsByCategory('${cat.strCategory}')">
+    const col = document.createElement("div");
+    col.className = "col-md-4 mb-4";
+    col.innerHTML = `
+      <div class="card h-100 shadow-sm" style="cursor:pointer;" onclick="fetchByCategory('${cat.strCategory}')">
         <img src="${cat.strCategoryThumb}" class="card-img-top" alt="${cat.strCategory}">
         <div class="card-body">
           <h5 class="card-title">${cat.strCategory}</h5>
+          <p class="card-text">${cat.strCategoryDescription.substring(0, 100)}...</p>
         </div>
       </div>
     `;
-
-    container.appendChild(card);
+    allCategoriesContainer.appendChild(col);
   });
 }
 
-
-// Global access for onclick
-window.getMealDetails = function (mealId) {
-  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
-    .then(res => res.json())
-    .then(data => {
-      const meal = data.meals[0];
-      showMealInModal(meal);
-    });
-};
-
-function showMealInModal(meal) {
-  const modalBody = document.getElementById("mealModalBody");
-
-  const ingredients = [];
-  for (let i = 1; i <= 20; i++) {
-    const ing = meal[`strIngredient${i}`];
-    const measure = meal[`strMeasure${i}`];
-    if (ing && ing.trim()) ingredients.push(`${ing} - ${measure}`);
+// Event Listeners
+searchInput.addEventListener("keyup", e => {
+  const query = e.target.value.trim();
+  if (query.length > 0) {
+    searchMeals(query);
+  } else {
+    mealsContainer.innerHTML = "";
+    categoryDescription.innerHTML = "";
+    allCategoriesContainer.style.display = "flex";
   }
+});
 
-  modalBody.innerHTML = `
-    <h4>${meal.strMeal}</h4>
-    <img src="${meal.strMealThumb}" class="img-fluid mb-3 rounded">
-    <h5>Ingredients</h5>
-    <ul>${ingredients.map(item => `<li>${item}</li>`).join("")}</ul>
-    <h5>Instructions</h5>
-    <p>${meal.strInstructions}</p>
-  `;
+// Initial Load
+fetchCategories();
 
-  new bootstrap.Modal(document.getElementById("mealModal")).show();
-}
-
-
-
- 
+// Allow global access for inline onclick
+window.fetchMealDetails = fetchMealDetails;
+window.fetchByCategory = fetchByCategory;
