@@ -16,3 +16,13 @@ body {
   object-fit: cover;
   border-bottom: 2px solid #eee;
 }
+
+.header{
+  background-color: darkorange;
+}
+.top{
+  color: white;
+   background-image: url('./assets/resto.png');
+   height:400px;
+  align-content: center;
+}
