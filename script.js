@@ -18,6 +18,10 @@ function loadCategories() {
   fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
     .then(res => res.json())
     .then(data => {
+      // Show category cards
+      displayCategories(data.categories);
+
+      // Fill dropdown (optional)
       const select = document.getElementById("category-select");
       data.categories.forEach(cat => {
         const opt = document.createElement("option");
@@ -27,6 +31,7 @@ function loadCategories() {
       });
     });
 }
+
 
 function fetchMealsByName(query) {
   fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
@@ -66,6 +71,28 @@ function displayMeals(meals) {
     container.appendChild(col);
   });
 }
+// display ategories
+function displayCategories(categories) {
+  const container = document.getElementById("categories-container");
+  container.innerHTML = "";
+
+  categories.forEach(cat => {
+    const card = document.createElement("div");
+    card.className = "col-md-3";
+
+    card.innerHTML = `
+      <div class="card h-100 text-center shadow-sm" style="cursor: pointer;" onclick="fetchMealsByCategory('${cat.strCategory}')">
+        <img src="${cat.strCategoryThumb}" class="card-img-top" alt="${cat.strCategory}">
+        <div class="card-body">
+          <h5 class="card-title">${cat.strCategory}</h5>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
 
 // Global access for onclick
 window.getMealDetails = function (mealId) {

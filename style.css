@@ -10,3 +10,9 @@ body {
 .card-title {
   font-size: 1.2rem;
 }
+
+#categories-container .card img {
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 2px solid #eee;
+}
