@@ -30,7 +30,7 @@ function loadCategories() {
         select.appendChild(opt);
       });
     });
-}
+  }
 
 
 function fetchMealsByName(query) {
