@@ -19,12 +19,15 @@ body {
 
 .header{
   background-color: darkorange;
+  display: flex;
+
 }
 .top{
   color: white;
    background-image: url('./assets/resto.png');
    height:400px;
   align-content: center;
+  padding-bottom: 10px;
 }
 #search-btn{
   border-radius: 50%;
