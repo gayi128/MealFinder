@@ -8,23 +8,30 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <script src="./script.js"></script>
   <!-- Header -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+   <div class="header"> 
+  <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="#">MealFinder</a>
       <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoryOffcanvas">
-        &#9776; Categories
+        &#9776; 
       </button>
     </div>
   </nav>
+  </div>
 
   <!-- Search -->
-  <div class="container mt-4">
+  
+   <div class="top">
+    <div class="container mt-4">
     <div class="mb-4 w-75 mx-auto">
       <input type="text" id="search-input" class="form-control" placeholder="Search meal by name...">
+      <h2 class="text-light text-center">What's your Favorite Cousine?</h2>
+      <h5 class="text-light text-center">personalize your experience</h5>
     </div>
-
+  </div>
+</div>
+      <div class="p-3 "><h1>Categories:</h1></div>
     <!-- Category Cards -->
     <div class="row" id="all-categories"></div>
 

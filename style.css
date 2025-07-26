@@ -1,9 +1,18 @@
 body {
       background-color: #f9f9f9;
+      border-radius: 10%;
     }
     .meal-card {
       transition: transform 0.2s ease;
     }
     .meal-card:hover {
       transform: scale(1.03);
+    }
+    .top{
+      height:400px;
+      background-image: url(./assets/resto.png);
+      align-content: center;
+    }
+    .header{
+      background-color: darkorange;
     }
